@@ -1,0 +1,52 @@
+site_name: Mapleistry
+site_url: https://mapleistry.vercel.app
+site_author: Abner Surrey
+site_description: 更适合高中生体质的化学拓展资料
+repo_name: ac227/Mapleistry
+repo_url: https://github.com/ac227/mapleistry
+copyright: Copyright &copy; 2025 Mapleistry
+theme:
+  name: 'material'
+  palette:
+    primary: 'blue'
+    accent: 'pink'
+  font:
+    text: 'Roboto, sans-serif'
+    code: 'Source Code Pro, monospace'
+
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML
+
+markdown_extensions:
+  - pymdownx.arithmatex
+
+nav:
+    - 首页: index.md
+    - 原子与元素: atom-and-elements.md
+    - 分子结构: molecular-structure.md
+    - 晶体结构: crystal-structure.md
+    - 配合物: complexes.md
+    - 热力学: thermodynamics.md
+    - 动力学: kinetics.md
+    - 水溶液: aqueous-solutions.md
+    - 电化学: electrochemistry.md
+    - 元素化学:
+        - 氢与稀有气体: hydrogen-and-noble-gases.md
+        - 卤素: halogens.md
+        - 氧族元素: chalcogens.md
+        - 氮族元素: pnictogens.md
+        - 碳族元素: carbon-group-elements.md
+        - 硼族元素: boron-group-elements.md
+        - s区元素: s-block-elements.md
+        - d区元素: d-block-elements.md
+        - ds区元素: f-block-elements.md
+        - 小结: elements-summary.md
+    - 有机化学:
+        - 基础知识: basic-concepts.md
+        - 有机物命名: organic-compounds-nomenclature.md
+        - 反应机理: reaction-mechanisms.md
+        - 重要反应: important-reactions.md
+    - 关于: about.md
+
+site_dir: 'site'
+dev_addr: '0.0.0.0:8000'
