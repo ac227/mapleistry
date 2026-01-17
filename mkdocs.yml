@@ -4,7 +4,7 @@ site_author: Abner Surrey
 site_description: 更适合高中生体质的化学拓展资料
 repo_name: ac227/Mapleistry
 repo_url: https://github.com/ac227/mapleistry
-copyright: Copyright &copy; 2025 Mapleistry
+copyright: Copyright &copy; 2025-2026 Mapleistry
 theme:
   name: 'material'
   palette:
