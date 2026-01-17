@@ -48,5 +48,10 @@ nav:
         - 重要反应: important-reactions.md
     - 关于: about.md
 
+plugins:
+  - search
+  - git-revision-date:
+      fallback_to_build_date: true
+
 site_dir: 'site'
 dev_addr: '0.0.0.0:8000'
