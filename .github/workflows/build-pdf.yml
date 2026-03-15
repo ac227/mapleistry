@@ -1,0 +1,64 @@
+name: Build PDF (Eisvogel)
+
+on:
+  release:
+    types: [created]
+
+permissions:
+  contents: write
+
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Install Pandoc + TeXLive + 中文字体
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive-full fonts-noto-cjk
+          pip install pyyaml
+      
+      - name: 下载 Eisvogel + 提取 eisvogel.latex
+        run: |
+          wget -q https://github.com/Wandmalfarbe/pandoc-latex-template/releases/latest/download/Eisvogel.tar.gz
+          tar -xzf Eisvogel.tar.gz --wildcards --no-anchored 'eisvogel.latex' --strip-components=1
+          echo "Eisvogel 模板已就绪："
+          ls -la eisvogel.latex
+      
+      - name: 合并 Markdown
+        run: python scripts/combine_md.py
+
+      - name: Debug 图片路径（是否有空图片）
+        run: |
+          echo "=== 检查空图片 ==="
+          grep -E '!\[[^]]*\]\(\s*\)' build/combined.md || echo "没有空图片"
+          echo "=== 前 30 个图片示例 ==="
+          grep -o '!\[[^]]*\]([^)]\{0,80\})' build/combined.md | head -30
+      - name: 生成 PDF
+        run: |
+          pandoc build/combined.md -o "mapleistry-${{ github.event.release.tag_name }}.pdf" \
+            --pdf-engine=xelatex \
+            --template=eisvogel.latex \
+            --resource-path=.:docs \
+            --include-in-header=pdf/custom-includes.tex \
+            --toc \
+            --toc-depth=3 \
+            -V titlepage=true \
+            -V titlepage-color="FFFFFF" \
+            -V titlepage-text-color="000000" \
+            -V toc-own-page=true \
+            -V lang=zh-CN \
+            -V mainfont="Noto Serif CJK SC" \
+            -V sansfont="Noto Sans CJK SC" \
+            -V CJKmainfont="Noto Serif CJK SC" \
+            -V title="mapleistry" \
+
+      - name: 上传到 Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: mapleistry-*.pdf
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
